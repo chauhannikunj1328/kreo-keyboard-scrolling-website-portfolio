@@ -51,7 +51,7 @@ export function Nav({ ref, active, onGo }: { ref?: Ref<HTMLElement>; active: Sec
       </div>
       <div className={styles.buy}>
         <Button small href="#buy" onClick={jumpTo("buy")}>
-          Buy now
+          Buy now · ₹4,799
         </Button>
       </div>
     </nav>
