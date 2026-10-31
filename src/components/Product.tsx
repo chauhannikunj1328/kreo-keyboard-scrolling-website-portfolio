@@ -87,7 +87,7 @@ export function Product({ item, under3D = false }: { item: CatalogItem; under3D?
             {gallery.map((g, i) => (
               <li key={g.src}>
                 <button type="button" onClick={() => setShot(i)} aria-label={`Show photo ${i + 1}`} aria-current={i === shot}>
-                  <img src={g.src} alt="" width="120" height="120" loading="lazy" decoding="async" />
+                  <img src={g.thumb ?? g.src} alt="" width="120" height="120" loading="lazy" decoding="async" />
                 </button>
               </li>
             ))}

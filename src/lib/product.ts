@@ -7,6 +7,8 @@ export const STORY_HANDLE = "swarm-white-purple-wireless-gaming-keyboard";
 export const productPath = (handle: string) => `/products/${handle}`;
 export const findProduct = (handle: string) => CATALOG.find((p) => p.handle === handle);
 export const catalogImage = (file: string) => `/catalog/${file}`;
+// the same photo at full size (1000–1200px), for where it's shown large: 800px reads soft there on 2x screens
+export const catalogLarge = (file: string) => `/catalog/large/${file}`;
 export const money = (n: number) => `₹${n.toLocaleString("en-IN")}`;
 export const discountOf = (p: CatalogItem) => Math.round((1 - p.price / p.mrp) * 100);
 
@@ -28,7 +30,7 @@ export const REVIEW_COUNT: Record<string, number> = {
   "swarm-x-all-white-wireless-gaming-keyboard": 66,
 };
 
-const SWARM_75_PHOTOS: { src: string; alt: string }[] = [
+const SWARM_75_PHOTOS: { src: string; thumb?: string; alt: string }[] = [
   { src: "/product/swarm-75-angle.webp", alt: "Swarm 75 White Purple keyboard, three-quarter view" },
   { src: "/product/swarm-75-front.webp", alt: "Swarm 75 keyboard, front view" },
   { src: "/product/swarm-75-top.webp", alt: "Swarm 75 keyboard, top-down view of the 75% layout" },
@@ -37,7 +39,9 @@ const SWARM_75_PHOTOS: { src: string; alt: string }[] = [
   { src: "/product/swarm-75-switch.webp", alt: "A clear-housing purple linear switch" },
   { src: "/product/swarm-75-layers.webp", alt: "Exploded view of the keyboard's layers" },
 ];
-export const galleryOf = (p: CatalogItem) => (p.handle === STORY_HANDLE ? SWARM_75_PHOTOS : p.images.map((f, i) => ({ src: catalogImage(f), alt: `${p.title}, photo ${i + 1}` })));
+// src is the large photo; thumb, where given, is a lighter file for the thumbnail strip
+export const galleryOf = (p: CatalogItem): { src: string; thumb?: string; alt: string }[] =>
+  p.handle === STORY_HANDLE ? SWARM_75_PHOTOS : p.images.map((f, i) => ({ src: catalogLarge(f), thumb: catalogImage(f), alt: `${p.title}, photo ${i + 1}` }));
 
 export const chipsOf = (p: CatalogItem) => (hasStory(p) ? ["Wireless", "Metal Volume Knob", "Pre Lubed Switches"] : [isWireless(p) ? "Wireless" : "Wired", "Hot Swappable"]);
 
@@ -65,14 +69,14 @@ const studio = (p: CatalogItem) => modelOf(p) === "Swarm X";
 
 export const bannersTop = (p: CatalogItem) => [
   studio(p)
-    ? { img: "meet", photo: catalogImage(p.images[2]), title: `Meet ${modelOf(p)}`, body: "Great looking on your desk, even better under your fingers.", dark: true }
+    ? { img: "meet", photo: catalogLarge(p.images[2]), title: `Meet ${modelOf(p)}`, body: "Great looking on your desk, even better under your fingers.", dark: true }
     : { img: "meet", title: `Meet ${modelOf(p)}`, body: "Great looking on your desk, even better under your fingers.", dark: false },
   { img: "space", title: "There's Space!", body: "A compact 75% layout that leaves your desk clear.", dark: true, right: true },
 ];
 
 export const filmOf = (p: CatalogItem) =>
   studio(p)
-    ? { src: catalogImage(p.images[3]), alt: `${p.title}, from above`, title: "Soft and quiet", body: "A gasket-mounted design cushions every keystroke, for a softer, quieter feel.", studio: true }
+    ? { src: catalogLarge(p.images[3]), alt: `${p.title}, from above`, title: "Soft and quiet", body: "A gasket-mounted design cushions every keystroke, for a softer, quieter feel.", studio: true }
     : { src: "/product/swarm-75-layers.webp", alt: "Exploded view of the keyboard's layers", title: "Built in layers", body: "A gasket-mounted stack with five layers of sound absorption, for a softer, quieter keystroke.", studio: false };
 export const BANNERS_BOTTOM = [
   { img: "wireless", title: "Use Wirelessly", body: "Sit however you like, with no cable in the way.", dark: false },
