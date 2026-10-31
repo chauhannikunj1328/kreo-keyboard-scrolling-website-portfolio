@@ -6,19 +6,14 @@ import styles from "./Nav.module.css";
 
 const LINKS: { name: SectionName; label: string }[] = [
   { name: "overview", label: "Overview" },
-  { name: "vibe-row", label: "Layout" },
   { name: "inside", label: "Inside" },
+  { name: "vibe-row", label: "Layout" },
   { name: "knob", label: "Knob" },
   { name: "specs", label: "Switch" },
 ];
 
 // the product page below the story
-const PAGE = [
-  ["buy", "Details"],
-  ["product-specs", "Specs"],
-  ["reviews", "Reviews"],
-  ["faq", "FAQ"],
-] as const;
+const PAGE = [["buy", "Details"]] as const;
 
 // the product bar under the store header: the sections of this page, and the buy button
 export function Nav({ ref, active, onGo }: { ref?: Ref<HTMLElement>; active: SectionName | null; onGo: (name: SectionName) => void }) {
