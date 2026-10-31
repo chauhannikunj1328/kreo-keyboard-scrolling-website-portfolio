@@ -95,9 +95,11 @@ export async function startExperience({
     // let dual-GPU Macs stay on the integrated GPU
     powerPreference: "default",
   });
-  // resolution: capped at 1.25x, and lowered further (to 0.8x) on machines that
-  // can't hold the frame rate; see adaptResolution
-  const DPR_CAP = Math.min(devicePixelRatio, 1.25);
+  // resolution: the screen's own density, up to 2x (below that, Retina and phone screens upscale
+  // the picture and it reads soft), stepped down to 1x on machines that can't hold the frame
+  // rate; see adaptResolution
+  const DPR_CAP = Math.min(devicePixelRatio, 2);
+  const DPR_FLOOR = Math.min(DPR_CAP, 1);
   let dprScale = 1;
   renderer.setPixelRatio(DPR_CAP);
   renderer.shadowMap.enabled = true;
@@ -310,7 +312,7 @@ export async function startExperience({
     if (interval > 1 / 40) slowFor += interval;
     else slowFor = Math.max(0, slowFor - interval * 0.5);
     let next = dprScale;
-    if (slowFor > 1) next = Math.max(0.8 / DPR_CAP, dprScale - 0.12);
+    if (slowFor > 1) next = Math.max(DPR_FLOOR / DPR_CAP, dprScale - 0.12);
     if (next !== dprScale) {
       dprScale = next;
       slowFor = 0;
