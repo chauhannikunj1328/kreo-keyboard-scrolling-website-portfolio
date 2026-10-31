@@ -1,0 +1,143 @@
+.card {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  border-radius: 12px;
+  background: #fafafa;
+}
+
+.media {
+  position: relative;
+  display: block;
+  aspect-ratio: 1;
+  overflow: hidden;
+  background: #ece6f6;
+}
+
+.media img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: opacity 0.3s var(--ease-ui), transform 0.5s var(--ease-ui);
+}
+
+.alt {
+  opacity: 0;
+}
+
+@media (hover: hover) {
+  .media:hover img {
+    transform: scale(1.03);
+  }
+
+  .media:hover .alt {
+    opacity: 1;
+  }
+}
+
+.save,
+.out {
+  position: absolute;
+  top: 14px;
+  left: 14px;
+  padding: 6px 12px;
+  border-radius: var(--radius-pill);
+  color: #fff;
+  font-size: 13px;
+  font-weight: var(--w-medium);
+}
+
+.save {
+  background: #c2185b;
+}
+
+.out {
+  background: #3f3f46;
+}
+
+.rating {
+  position: absolute;
+  right: 12px;
+  bottom: 12px;
+  padding: 6px 10px;
+  border-radius: var(--radius-pill);
+  background: rgba(255, 255, 255, 0.85);
+  color: var(--ink);
+  font-size: 12px;
+}
+
+.rating i {
+  color: #f59e0b;
+  font-style: normal;
+}
+
+.body {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 10px;
+  padding: 18px 20px 20px;
+}
+
+.body h2 {
+  flex: 1;
+  font-family: var(--display);
+  font-size: 18px;
+  font-weight: 500;
+  line-height: 1.2;
+}
+
+.body h2 a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.price {
+  font-size: 15px;
+}
+
+.price strong {
+  font-family: var(--display);
+  font-size: 22px;
+  font-weight: 500;
+}
+
+.price s {
+  margin-left: 4px;
+  color: var(--muted);
+}
+
+.action {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 44px;
+  border: 0;
+  border-radius: var(--radius-pill);
+  background: var(--button);
+  color: var(--on-button);
+  font: inherit;
+  font-size: 14px;
+  font-weight: var(--w-medium);
+  text-decoration: none;
+  cursor: pointer;
+  transition: background var(--t-button) var(--ease-ui);
+}
+
+.action:hover {
+  background: var(--button-hover);
+}
+
+.action:disabled {
+  background: #e5e5e5;
+  color: #737373;
+  cursor: not-allowed;
+}
+
+.action:focus-visible,
+.media:focus-visible {
+  outline: 2px solid var(--button);
+  outline-offset: 2px;
+}

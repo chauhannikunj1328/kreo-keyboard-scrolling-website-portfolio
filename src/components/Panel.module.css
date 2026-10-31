@@ -1,0 +1,77 @@
+.panel {
+  position: absolute;
+  max-width: var(--panel-width);
+  opacity: 0;
+}
+
+.panel::before {
+  content: "";
+  position: absolute;
+  inset: var(--panel-pool);
+  z-index: -1;
+  background: radial-gradient(closest-side, var(--shade), var(--shade-none));
+  pointer-events: none;
+}
+
+.eyebrow {
+  margin-bottom: var(--gap-eyebrow);
+  font-size: var(--size-eyebrow);
+  font-weight: var(--w-text);
+  font-stretch: var(--stretch-ui);
+  letter-spacing: var(--track-eyebrow);
+  color: var(--muted);
+}
+
+.title {
+  margin-bottom: var(--gap-heading);
+  font-size: var(--size-heading);
+  font-weight: var(--w-medium);
+  font-stretch: var(--stretch-heading);
+  letter-spacing: var(--track-heading);
+  line-height: var(--lh-heading);
+}
+
+.body {
+  font-size: var(--size-body);
+  line-height: var(--lh-body);
+  color: var(--muted);
+  font-stretch: var(--stretch-body);
+}
+
+.inside {
+  right: var(--gutter);
+  bottom: var(--panel-bottom);
+}
+
+.vibe {
+  left: var(--gutter);
+  bottom: var(--panel-bottom);
+  max-width: var(--panel-width-wide);
+}
+
+.key {
+  left: var(--gutter);
+  top: var(--panel-key-top);
+}
+
+@media (max-width: 760px) {
+  .inside,
+  .vibe,
+  .key {
+    left: var(--gutter);
+    right: var(--gutter);
+    max-width: none;
+    top: auto;
+    bottom: var(--panel-bottom-phone);
+  }
+
+  .title br {
+    display: none;
+  }
+
+  /* on a phone the copy sits over the keyboard: give it a white panel fading up from the bottom */
+  .panel::before {
+    inset: -72px calc(-1 * var(--gutter)) calc(-1 * var(--panel-bottom-phone) - 8px);
+    background: linear-gradient(rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.96) 72px);
+  }
+}

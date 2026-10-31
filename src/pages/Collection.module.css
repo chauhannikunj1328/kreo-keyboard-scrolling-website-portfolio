@@ -1,0 +1,241 @@
+.page {
+  padding-top: calc(var(--header-h) + 34px);
+  background: #fff;
+  color: var(--ink);
+}
+
+.banner {
+  position: relative;
+  height: 400px;
+  overflow: hidden;
+  background: #8d73c4;
+}
+
+/* a blurred copy fills the sides on very wide screens */
+.backdrop {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: blur(36px);
+  transform: scale(1.15);
+}
+
+/* The keyboards sit at 55.6% across and 56.7% down the photo, so it is placed by that point
+   (not by the middle of the photo): they stay centred and whole at any screen width. */
+.photo {
+  position: absolute;
+  top: -15.8%;
+  left: 50%;
+  height: 116%;
+  width: auto;
+  max-width: none;
+  transform: translateX(-55.6%);
+  mask-image: linear-gradient(90deg, transparent, #000 10%, #000 90%, transparent);
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 10%, #000 90%, transparent);
+}
+
+.sheet {
+  width: min(1200px, 100%);
+  margin: 0 auto;
+  padding: 40px var(--gutter) 64px;
+  background: #fff;
+}
+
+.toolbar {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 24px;
+  margin-bottom: 28px;
+}
+
+.toolbar p {
+  font-size: 13px;
+  color: var(--muted);
+}
+
+.toolbar h1 {
+  margin-top: 6px;
+  font-family: var(--display);
+  font-size: clamp(32px, 3.6vw, 46px);
+  font-weight: 500;
+  line-height: 1.1;
+}
+
+.filterButton {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  gap: 10px;
+  height: 48px;
+  padding: 0 22px;
+  border: 0;
+  border-radius: var(--radius-pill);
+  background: var(--button);
+  color: var(--on-button);
+  font: inherit;
+  font-size: 15px;
+  font-weight: var(--w-medium);
+  cursor: pointer;
+  transition: background var(--t-button) var(--ease-ui);
+}
+
+.filterButton:hover {
+  background: var(--button-hover);
+}
+
+.filterButton:focus-visible {
+  outline: 2px solid var(--button);
+  outline-offset: 2px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+
+.none {
+  padding: 72px 0;
+  text-align: center;
+}
+
+.none h2 {
+  font-family: var(--display);
+  font-size: 30px;
+  font-weight: 500;
+}
+
+.none p {
+  margin: 8px 0 18px;
+  color: var(--muted);
+}
+
+.none a {
+  color: var(--accent);
+}
+
+.scrim {
+  position: fixed;
+  inset: 0;
+  z-index: 30;
+  background: rgba(23, 23, 23, 0.4);
+}
+
+.filters {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  flex-direction: column;
+  width: min(400px, 100%);
+  overflow-y: auto;
+  background: #fff;
+}
+
+.filters > header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 22px 24px;
+}
+
+.filters h2 {
+  font-family: var(--display);
+  font-size: 26px;
+  font-weight: 500;
+}
+
+.filters > header button {
+  width: 40px;
+  height: 40px;
+  border: 0;
+  border-radius: 50%;
+  background: var(--ghost-hover);
+  font-size: 22px;
+  cursor: pointer;
+}
+
+.filters fieldset {
+  display: grid;
+  gap: 10px;
+  margin: 0;
+  padding: 16px 24px;
+  border: 0;
+  border-top: 1px solid var(--faint);
+}
+
+.filters legend {
+  float: left;
+  width: 100%;
+  margin-bottom: 4px;
+  font-weight: var(--w-medium);
+}
+
+.filters label {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 15px;
+  cursor: pointer;
+}
+
+.filters input {
+  accent-color: var(--button);
+}
+
+.filters input[type="range"] {
+  width: 100%;
+}
+
+.filters > footer {
+  display: grid;
+  grid-template-columns: 1fr 1.6fr;
+  gap: 10px;
+  margin-top: auto;
+  padding: 18px 24px 24px;
+}
+
+.filters > footer button {
+  height: 48px;
+  border: 0;
+  border-radius: var(--radius-pill);
+  font: inherit;
+  font-weight: var(--w-medium);
+  cursor: pointer;
+}
+
+.filters > footer button:first-child {
+  background: var(--ghost-hover);
+  color: var(--button);
+}
+
+.filters > footer button:last-child {
+  background: var(--button);
+  color: var(--on-button);
+}
+
+@media (max-width: 960px) {
+  .grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 760px) {
+  .banner {
+    height: 320px;
+  }
+}
+
+@media (max-width: 520px) {
+  .banner {
+    height: 240px;
+  }
+
+  .grid {
+    gap: 10px;
+  }
+}

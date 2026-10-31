@@ -1,0 +1,79 @@
+.nav {
+  position: absolute;
+  top: var(--header-h);
+  left: 0;
+  right: 0;
+  height: var(--subnav-h);
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  padding: 0 var(--gutter);
+  background: #fff;
+  opacity: 0;
+}
+
+.product {
+  justify-self: start;
+  pointer-events: auto;
+  color: var(--ink);
+  text-decoration: none;
+  font-size: var(--size-body);
+  font-weight: var(--w-bold);
+  letter-spacing: var(--track-ui);
+}
+
+.links {
+  display: flex;
+  gap: var(--nav-gap);
+}
+
+.links a {
+  padding: 12px 0;
+  pointer-events: auto;
+  color: var(--muted);
+  text-decoration: none;
+  font-size: var(--size-nav);
+  font-stretch: var(--stretch-nav);
+  transition: color var(--t-link) var(--ease-ui);
+}
+
+.links a:hover,
+.links a.active {
+  color: var(--ink);
+}
+
+.buy {
+  justify-self: end;
+}
+
+@media (max-width: 760px) {
+  .nav {
+    grid-template-columns: 1fr auto;
+    gap: 12px;
+  }
+
+  .product {
+    display: none;
+  }
+
+  .links {
+    gap: 22px;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+
+  .links::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+/* the product page's own sections: only where there is room for them */
+.extra {
+  display: none;
+}
+
+@media (min-width: 1240px) {
+  .extra {
+    display: inline;
+  }
+}
