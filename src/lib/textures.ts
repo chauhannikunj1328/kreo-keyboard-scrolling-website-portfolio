@@ -1,6 +1,7 @@
 import * as THREE from "three";
 import { KEYS, type Key } from "./layout";
 import type { KeyboardInputs } from "./keyboard";
+import { KREO_K } from "./kreo-mark";
 
 const BASE = "https://assets.uberdesigner.ai/vibetyper/";
 
@@ -21,8 +22,6 @@ function inkOf(k: Key) {
   if (k.id === "F12") return "#39c6f5";
   return t < 0.4 ? "#e8392f" : t < 0.53 ? "#f07a1a" : "#1f86e0";
 }
-// the k from the Kreo logo (public/kreo-logo.svg), in that file's coordinates: 490 wide, 640 tall from y 32
-const KREO_K = "M0.0 251.5L0.0 32.0L41.5 32.0L83.0 32.0L83.0 167.5C83.0 242.0 83.4 303.0 83.8 303.0C84.2 303.0 90.4 300.5 97.6 297.4C104.7 294.3 122.0 287.1 136.0 281.3C241.1 237.8 263.9 227.9 305.0 207.3C339.9 189.9 348.3 184.7 359.5 173.5C385.8 147.1 399.8 106.1 403.6 44.8L404.3 33.0L446.8 33.0L489.3 33.0L488.6 48.6C485.0 132.0 462.1 192.5 417.1 237.8C379.2 275.8 337.8 297.0 214.0 341.5C128.5 372.3 93.5 388.8 57.7 415.3C39.8 428.5 17.2 449.9 5.6 464.8C2.9 468.2 0.5 471.0 0.4 471.0C0.2 471.0 0.0 372.2 0.0 251.5ZM406.6 670.6C393.4 598.9 369.5 561.7 322.3 539.3C252.7 506.2 182.8 512.9 137.6 556.8C111.0 582.7 95.2 613.8 82.0 666.8L80.9 671.0L41.0 671.0L1.0 671.0L0.8 665.8C-2.7 554.4 85.1 454.7 205.2 433.8C223.0 430.7 263.1 430.5 280.5 433.4C395.0 452.4 482.9 547.3 487.7 657.0L488.3 671.7L485.6 672.2C484.2 672.5 465.9 672.7 445.0 672.7C407.4 672.6 406.9 672.6 406.6 670.6Z";
 
 interface Cell {
   x: number;
@@ -201,12 +200,17 @@ function drawShadow() {
   return tex;
 }
 
-export async function loadTextures(): Promise<KeyboardInputs> {
+// onFile reports each finished download (for the loading bar), starting with (0, total)
+export async function loadTextures(onFile?: (loaded: number, total: number) => void): Promise<KeyboardInputs> {
+  const FILES = 5;
+  let loaded = 0;
+  onFile?.(0, FILES);
   const loader = new THREE.TextureLoader();
   const load = async (file: string, { srgb = true, aniso = 8 } = {}) => {
     const t = await loader.loadAsync(BASE + file);
     if (srgb) t.colorSpace = THREE.SRGBColorSpace;
     t.anisotropy = aniso;
+    onFile?.(++loaded, FILES);
     return t;
   };
   const [padTexture, pcbTexture, batteryTexture, grain, smudge] = await Promise.all([

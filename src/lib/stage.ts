@@ -44,17 +44,35 @@ export async function startExperience({
   canvas,
   ui,
   onSection,
+  onProgress,
+  ready,
   cancelled,
 }: {
   canvas: HTMLCanvasElement;
   ui: UiRefs;
   onSection: (name: SectionName | null) => void;
+  // the share of the textures and fonts downloaded so far, 0–1
+  onProgress?: (fraction: number) => void;
+  // resolves when the loading bar has filled: the intro waits for it
+  ready?: () => Promise<void>;
   // the caller gave up while the fonts loaded (React StrictMode's first mount)
   cancelled: AbortSignal;
 }): Promise<Experience | null> {
   // a stalled download shouldn't leave the page blank for ever: give up after 20 s
   const timeout = new Promise<never>((_, reject) => setTimeout(() => reject(new Error("Loading the 3D keyboard timed out")), 20000));
-  const [textures] = await Promise.race([Promise.all([loadTextures(), ...FONTS.map((f) => document.fonts.load(f))]), timeout]);
+  let files = [0, 1];
+  let fonts = 0;
+  const report = () => onProgress?.((files[0] + fonts) / (files[1] + FONTS.length));
+  const loading = Promise.all([
+    loadTextures((loaded, total) => {
+      files = [loaded, total];
+      report();
+    }),
+    ...FONTS.map((f) => document.fonts.load(f).then(() => (fonts++, report()))),
+  ]);
+  const [textures] = await Promise.race([loading, timeout]);
+  if (cancelled.aborted) return null;
+  await ready?.();
   if (cancelled.aborted) return null;
   const abort = new AbortController();
   const { signal } = abort;

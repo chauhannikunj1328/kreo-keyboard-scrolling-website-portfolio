@@ -6,6 +6,7 @@ import { Nav } from "./Nav";
 import { Hero } from "./Hero";
 import { Panel } from "./Panel";
 import { Labels } from "./Labels";
+import { Loader, type LoaderHandle } from "./Loader";
 import { Final } from "./Final";
 import { Product } from "./Product";
 import type { CatalogItem } from "../lib/catalog";
@@ -29,6 +30,7 @@ const ACCEPT = {
 export function Story({ item }: { item: CatalogItem }) {
   const canvas = useRef<HTMLCanvasElement>(null);
   const veil = useRef<HTMLDivElement>(null);
+  const loader = useRef<LoaderHandle>(null);
   const nav = useRef<HTMLElement>(null);
   const hero = useRef<HTMLElement>(null);
   const cue = useRef<HTMLSpanElement>(null);
@@ -46,6 +48,7 @@ export function Story({ item }: { item: CatalogItem }) {
   useEffect(() => {
     const cancelled = new AbortController();
     // three.js and the post-processing load in their own chunk
+    // the loading bar: the 3D chunk is the first stretch, the textures and fonts the rest
     import("../lib/stage")
       .then(({ startExperience }) =>
         startExperience({
@@ -64,6 +67,8 @@ export function Story({ item }: { item: CatalogItem }) {
             story: story.current!,
           },
           onSection: setActive,
+          onProgress: (f) => loader.current?.progress(0.3 + 0.7 * f),
+          ready: () => loader.current?.finish() ?? Promise.resolve(),
           cancelled: cancelled.signal,
         }),
       )
@@ -97,10 +102,7 @@ export function Story({ item }: { item: CatalogItem }) {
       </div>
       <div className={styles.ui}>
         <div ref={veil} className={styles.veil}>
-          <div className={styles.loader} role="status" aria-label="Loading">
-            <span className={styles.mark}>kreo</span>
-            <span className={styles.bar} />
-          </div>
+          <Loader ref={loader} />
         </div>
         {failed && (
           <p className={styles.error}>

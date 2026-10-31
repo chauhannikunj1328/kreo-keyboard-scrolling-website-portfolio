@@ -23,61 +23,17 @@
   pointer-events: none;
 }
 
+/* a soft grey studio behind the loader, so its glow has something to light */
 .veil {
   position: absolute;
   inset: 0;
-  background: var(--bg);
+  background: radial-gradient(ellipse 70% 60% at 50% 46%, #fbfaff 0%, #eeedf3 60%, #e2e1e9 100%);
 }
 
 .scroll {
   position: relative;
   height: var(--scroll-length);
   pointer-events: none;
-}
-
-.loader {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 18px;
-}
-
-.mark {
-  font-size: var(--size-brand);
-  font-weight: var(--w-bold);
-  letter-spacing: var(--track-ui);
-  color: var(--accent);
-}
-
-.bar {
-  position: relative;
-  width: 120px;
-  height: 2px;
-  overflow: hidden;
-  border-radius: var(--radius-pill);
-  background: var(--faint);
-}
-
-.bar::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  width: 40%;
-  background: var(--button);
-  animation: load 1.1s ease-in-out infinite;
-}
-
-@keyframes load {
-  from {
-    transform: translateX(-100%);
-  }
-  to {
-    transform: translateX(250%);
-  }
 }
 
 .error {

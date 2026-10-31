@@ -46,7 +46,12 @@
   justify-self: end;
 }
 
-@media (max-width: 760px) {
+/* the section menu's button: only where the tabs fold away */
+.toggle {
+  display: none;
+}
+
+@media (max-width: 900px) {
   .nav {
     grid-template-columns: 1fr auto;
     gap: 12px;
@@ -56,24 +61,98 @@
     display: none;
   }
 
+  .toggle {
+    justify-self: start;
+    display: grid;
+    gap: 1px;
+    padding: 0;
+    border: 0;
+    background: none;
+    color: var(--ink);
+    font: inherit;
+    text-align: left;
+    cursor: pointer;
+    pointer-events: auto;
+  }
+
+  .toggle small {
+    color: var(--muted);
+    font-size: 11px;
+    line-height: 1.2;
+  }
+
+  .toggle span {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 15px;
+    font-weight: var(--w-medium);
+    line-height: 1.2;
+  }
+
+  .toggle svg {
+    transition: transform var(--t-link) var(--ease-ui);
+  }
+
+  .open .toggle svg {
+    transform: rotate(180deg);
+  }
+
+  /* the tabs, as a panel dropping from the bar */
   .links {
-    gap: 22px;
-    overflow-x: auto;
-    scrollbar-width: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    flex-direction: column;
+    gap: 0;
+    padding: 4px var(--gutter) 12px;
+    border-top: 1px solid #efeff2;
+    background: #fff;
+    box-shadow: 0 18px 32px -14px rgba(42, 18, 89, 0.22);
+    visibility: hidden;
+    opacity: 0;
+    transform: translateY(-6px);
+    transition:
+      opacity var(--t-link) var(--ease-ui),
+      transform var(--t-link) var(--ease-ui),
+      visibility 0s linear var(--t-link);
   }
 
-  .links::-webkit-scrollbar {
-    display: none;
+  .open .links {
+    visibility: visible;
+    opacity: 1;
+    transform: none;
+    transition:
+      opacity var(--t-link) var(--ease-ui),
+      transform var(--t-link) var(--ease-ui);
   }
-}
 
-/* the product page's own sections: only where there is room for them */
-.extra {
-  display: none;
-}
+  .links a {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    min-height: 48px;
+    padding: 0;
+    border-bottom: 1px solid #f2f2f4;
+    color: var(--ink);
+    font-size: 16px;
+  }
 
-@media (min-width: 1240px) {
-  .extra {
-    display: inline;
+  .links a:last-child {
+    border-bottom: 0;
+  }
+
+  .links a.active {
+    color: var(--button);
+    font-weight: var(--w-medium);
+  }
+
+  .links a.active::after {
+    content: "";
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--button);
   }
 }

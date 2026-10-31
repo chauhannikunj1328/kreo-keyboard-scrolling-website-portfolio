@@ -1,0 +1,145 @@
+/* --p (0–1) is set every frame by Loader.tsx */
+.loader {
+  --p: 0;
+  --track-pad: 5px;
+  --label: 66px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: min(440px, calc(100vw - 48px));
+  transform: translate(-50%, -50%);
+}
+
+/* the light the fill throws onto the page around the capsule */
+.halo {
+  position: absolute;
+  top: 50%;
+  left: 4%;
+  width: calc(14% + 70% * var(--p));
+  height: 64px;
+  border-radius: var(--radius-pill);
+  background: rgba(186, 160, 255, 0.75);
+  filter: blur(36px);
+  transform: translateY(-50%);
+}
+
+/* the white shell: lit from above, with a soft drop shadow */
+.capsule {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  height: 72px;
+  padding: 0 12px;
+  border-radius: var(--radius-pill);
+  background: linear-gradient(180deg, #ffffff 0%, #f1f0f5 55%, #dddce4 100%);
+  box-shadow:
+    inset 0 1.5px 0 #fff,
+    inset 0 -2px 4px rgba(60, 50, 90, 0.12),
+    0 1px 2px rgba(30, 20, 60, 0.12),
+    0 20px 44px -14px rgba(40, 25, 90, 0.38);
+}
+
+/* the recessed track */
+.track {
+  position: relative;
+  flex: 1;
+  height: 46px;
+  overflow: hidden;
+  border-radius: var(--radius-pill);
+  background: linear-gradient(180deg, #dcdae4, #ecebf1);
+  box-shadow:
+    inset 0 2px 5px rgba(40, 30, 80, 0.28),
+    inset 0 -1px 0 rgba(255, 255, 255, 0.7),
+    0 1px 0 rgba(255, 255, 255, 0.95);
+}
+
+/* the fill, in the buy button's purple with a light glow: a pill from the start, growing up to the percentage */
+.fill {
+  position: absolute;
+  top: var(--track-pad);
+  bottom: var(--track-pad);
+  left: var(--track-pad);
+  width: calc(36px + (100% - 2 * var(--track-pad) - 36px - var(--label)) * var(--p));
+  border-radius: var(--radius-pill);
+  background: linear-gradient(180deg, #6a45c4 0%, var(--button) 55%, #2a1259 100%);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.35),
+    inset 0 0 10px rgba(190, 160, 255, 0.45),
+    0 0 8px 1px rgba(205, 180, 255, 0.95),
+    0 0 26px 8px rgba(176, 140, 255, 0.6);
+}
+
+.label {
+  position: absolute;
+  top: 50%;
+  right: 0;
+  width: var(--label);
+  padding-right: 4px;
+  transform: translateY(-50%);
+  color: var(--ink);
+  font-size: 15px;
+  font-weight: var(--w-medium);
+  font-variant-numeric: tabular-nums;
+  text-align: center;
+}
+
+/* the volume knob: a turned silver body with the spun, etched top from the 3D keyboard */
+.knob {
+  position: relative;
+  flex: none;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: linear-gradient(180deg, #fdfdfe, #c4c7d0);
+  box-shadow:
+    0 4px 8px rgba(30, 20, 60, 0.28),
+    0 1px 1px rgba(30, 20, 60, 0.25),
+    inset 0 1px 0 #fff,
+    inset 0 -1px 1px rgba(60, 64, 80, 0.35);
+}
+
+.face {
+  position: absolute;
+  inset: 4px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background:
+    repeating-radial-gradient(circle, rgba(255, 255, 255, 0.08) 0 1px, rgba(70, 74, 86, 0.07) 1px 2px),
+    conic-gradient(from 0.6rad, #f6f7fa, #c9ccd4, #eef0f4, #b9bdc7, #f8f9fb, #c6cad3, #eff1f5, #bcc0ca, #f6f7fa);
+  box-shadow:
+    inset 0 1px 2px rgba(40, 44, 56, 0.35),
+    inset 0 -1px 0 rgba(255, 255, 255, 0.8);
+  rotate: calc(var(--p) * 360deg);
+}
+
+.face svg {
+  width: 52%;
+  fill: #3f424c;
+  filter: drop-shadow(0 0.6px 0 rgba(255, 255, 255, 0.9));
+}
+
+/* contact shadow on the floor */
+.shadow {
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 8%;
+  right: 8%;
+  height: 16px;
+  border-radius: 50%;
+  background: rgba(30, 20, 60, 0.28);
+  filter: blur(10px);
+}
+
+/* the fill's glow reflected in the floor */
+.reflection {
+  position: absolute;
+  top: calc(100% + 18px);
+  left: 6%;
+  width: calc(12% + 66% * var(--p));
+  height: 90px;
+  border-radius: 40%;
+  background: linear-gradient(180deg, rgba(150, 115, 240, 0.45), rgba(150, 115, 240, 0));
+  filter: blur(20px);
+}
