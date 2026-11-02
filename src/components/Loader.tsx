@@ -15,8 +15,8 @@ const HOLD = 260;
 // ?slow plays the loader on a fixed, slow clock instead of following the download (for recording
 // it): it rests on 1% for SLOW_WAIT seconds, then fills over SLOW_FILL seconds.
 const SLOW = new URLSearchParams(location.search).has("slow");
-const SLOW_WAIT = 15;
-const SLOW_FILL = 45;
+const SLOW_WAIT = 7;
+const SLOW_FILL = 8;
 const easeInOut = (x: number) => (1 - Math.cos(Math.PI * x)) / 2;
 
 // The loading capsule: a glowing fill in the buy button's purple, and the keyboard's silver volume
